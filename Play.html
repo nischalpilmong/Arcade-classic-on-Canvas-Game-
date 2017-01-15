@@ -7,28 +7,46 @@
 <body>
 
 <canvas id="gameClassic" width="800px" height="600px">
+    <img src="Spss-50.png" id="img" >
 
 
 </canvas>
 <script>
+    var canvas ;
+    var canvasContext;
+    var ballRed = 50;
+
     window.onload=function() {
         // function init() {
         //window.onload = init(); // yo pani garna sakincha .
-        
-        var canvas ;
-        var canvasContext;
+
+
         canvas=document.getElementById('gameClassic');
         canvasContext=canvas.getContext("2d");
+        setInterval(drawEverything,500);
+
+    }
+    function drawEverything() {
         // The HTMLCanvasElement.getContext() method returns a drawing context on the canvas, or null if the context
         // identifier is not supported.
         //Syntax
-       // canvas.getContext(contextType, contextAttributes);
+        // canvas.getContext(contextType, contextAttributes);
+        ballRed= ballRed + 20;
+        console.log(ballRed );
+
+
 
         canvasContext.fillStyle="black";
-        canvasContext.fillRect(0,0,canvas.width,canvas.height);
+        canvasContext.fillRect(0,0,canvas.width, canvas.height);
+        canvasContext.fillStyle = "white";
+        canvasContext.fillRect(225,210,200,200);
+        canvasContext.fillStyle="red";
+        canvasContext.fillRect(ballRed,200,50,25);
+        // centering using width and height propertie of canvas : canvasContext.fillStyle="white";
+        // canvasContext.fillRect(((canvas.width/2)-2), ((canvas.height/2)-2),4,4) ;
 
-
-
+        // manually centering garna chai just : ........................
+        // canvasContext.fillRect(398,298,4,4) ;
     }
 </script>
 </body>
