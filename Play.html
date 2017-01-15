@@ -15,6 +15,7 @@
     var canvas ;
     var canvasContext;
     var ballRed = 50;
+    var ballspeedx = 5;
 
     window.onload=function() {
         // function init() {
@@ -23,7 +24,23 @@
 
         canvas=document.getElementById('gameClassic');
         canvasContext=canvas.getContext("2d");
-        setInterval(drawEverything,500);
+        var frames =30;
+        setInterval(function() {
+            moveEverything();
+            drawEverything();
+        },1000/frames);
+
+    }
+
+    function moveEverything () {
+        ballRed= ballRed + ballspeedx;
+        if (ballRed > canvas.width ) {
+             ballspeedx = -ballspeedx;
+        }
+        /* bouncing back code */
+          if (ballRed < 0) {
+            ballspeedx = -ballspeedx;
+        }
 
     }
     function drawEverything() {
@@ -31,22 +48,25 @@
         // identifier is not supported.
         //Syntax
         // canvas.getContext(contextType, contextAttributes);
-        ballRed= ballRed + 5;
-        console.log(ballRed );
 
+        // draws the black
 
+       colorRect(0,0,canvas.width, canvas.height,'black');
 
-        canvasContext.fillStyle="black";
-        canvasContext.fillRect(0,0,canvas.width, canvas.height);
-        canvasContext.fillStyle = "white";
-        canvasContext.fillRect(225,210,200,200);
-        canvasContext.fillStyle="red";
-        canvasContext.fillRect(ballRed,100,10,10);
+        colorRect(0,210,10,100,'white');
+        // draws the ball red
+        colorRect(ballRed,100,10,10,'red');
         // centering using width and height propertie of canvas : canvasContext.fillStyle="white";
         // canvasContext.fillRect(((canvas.width/2)-2), ((canvas.height/2)-2),4,4) ;
 
         // manually centering garna chai just : ........................
         // canvasContext.fillRect(398,298,4,4) ;
+    }
+    // this function helps to make templates . so we can use it in top
+    function colorRect(leftx, topy, width, height , drawcolor ) {
+        canvasContext.fillStyle = drawcolor;
+        canvasContext.fillRect(leftx,topy,width,height);
+
     }
 </script>
 </body>
