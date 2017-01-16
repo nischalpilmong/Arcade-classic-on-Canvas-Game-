@@ -45,7 +45,13 @@
         setInterval(function() {
             moveEverything();
             drawEverything();
-        },1000/frames);
+        },1000/frames)
+        //set paddles position value whenever mouse moves
+        canvas.addEventListener('mousemove' ,
+        function(evt){
+            var mousepos = calculateMousePos(evt);
+            paddle1y = mousepos.y;
+        });
 
     }
 
