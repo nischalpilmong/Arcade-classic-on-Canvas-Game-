@@ -14,8 +14,25 @@
 <script>
     var canvas ;
     var canvasContext;
-    var ballWhite = 50;
-    var ballspeedx = 5;
+    var ballWhitex = 50;
+    var ballWhitey = 50;
+    var ballspeedx = 10;
+    var ballspeedy = 4;
+    var paddle1y = 250;
+    const PADDLE_HEIGHT = 100;
+
+    /* finding the mouse position relative to canvas */
+    function calculateMousePos (evt) {
+        // The Element.getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
+        var rect = canvas.getBoundingClientRect();
+        var root = document.documentElement;
+        var mouseX= evt.clientX-rect.left-root.scrollLeft;
+        var mouseY= evt.clientY-rect.top-root.scrollTop;
+        return {
+            x:mouseX,
+            y:mouseY
+        };
+    }
 
     window.onload=function() {
         // function init() {
@@ -33,13 +50,21 @@
     }
 
     function moveEverything () {
-        ballWhite= ballWhite + ballspeedx;
-        if (ballWhite > canvas.width ) {
-             ballspeedx = -ballspeedx;
+        ballWhitex= ballWhitex + ballspeedx;
+        ballWhitey= ballWhitey + ballspeedy;
+        if (ballWhitex > canvas.width ) {
+            ballspeedx = -ballspeedx;
         }
         /* bouncing back code */
-          if (ballWhite < 0) {
+        if (ballWhitex < 0) {
             ballspeedx = -ballspeedx;
+        }
+        if (ballWhitey > canvas.height ) {
+             ballspeedy = -ballspeedy;
+        }
+        /* bouncing back code */
+          if (ballWhitey < 0) {
+            ballspeedy = -ballspeedy;
         }
 
     }
@@ -55,7 +80,7 @@
 
         colorRect(0,210,10,100,'white');
         // draws the ball white
-        colorCircle(ballWhite,100,10,"white");
+        colorCircle(ballWhitex,ballWhitey,10,"white");
 
         // centering using width and height propertie of canvas : canvasContext.fillStyle="white";
         // canvasContext.fillRect(((canvas.width/2)-2), ((canvas.height/2)-2),4,4) ;
