@@ -19,7 +19,10 @@
     var ballspeedx = 10;
     var ballspeedy = 4;
     var paddle1y = 250;
+    var paddle2y = 250;
+
     const PADDLE_HEIGHT = 100;
+    const PADDLE_THICKNESS = 10;
 
     /* finding the mouse position relative to canvas */
     function calculateMousePos (evt) {
@@ -50,20 +53,40 @@
         canvas.addEventListener('mousemove' ,
         function(evt){
             var mousepos = calculateMousePos(evt);
-            paddle1y = mousepos.y;
+            paddle1y = mousepos.y-(PADDLE_HEIGHT/2);
         });
 
     }
+    //function to reset a ball
+    function ballReset() {
+        ballspeedx = -ballspeedx;
+      ballWhitex = canvas.width/2;
+        ballWhitey = canvas.height/2;
+    }
+
 
     function moveEverything () {
         ballWhitex= ballWhitex + ballspeedx;
         ballWhitey= ballWhitey + ballspeedy;
         if (ballWhitex > canvas.width ) {
-            ballspeedx = -ballspeedx;
+            if (ballWhitey > paddle2y &&
+                    ballWhitey < paddle2y + PADDLE_HEIGHT) {
+                ballspeedx = - ballspeedx;
+            }
+            else {
+                ballReset();
+            }
         }
         /* bouncing back code */
         if (ballWhitex < 0) {
-            ballspeedx = -ballspeedx;
+            // ballspeedx = -ballspeedx;
+            if (ballWhitey > paddle1y &&
+                ballWhitey < paddle1y + PADDLE_HEIGHT) {
+                ballspeedx = - ballspeedx;
+            }
+            else {
+                ballReset();
+            }
         }
         if (ballWhitey > canvas.height ) {
              ballspeedy = -ballspeedy;
@@ -83,8 +106,12 @@
         // draws the black
 
        colorRect(0,0,canvas.width, canvas.height,'black');
-
-        colorRect(0,210,10,100,'white');
+        //this is left player paddle
+        colorRect(0,paddle1y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
+        //this is right player paddle
+        //800-10 = 790 . that means ... 800 px width - 10 px of the width of paddle ...this will take our paddle to far left .
+       // colorRect(790,paddle2y,10,PADDLE_HEIGHT,'white');
+        colorRect(canvas.width-PADDLE_THICKNESS,paddle2y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
         // draws the ball white
         colorCircle(ballWhitex,ballWhitey,10,"white");
 
