@@ -20,6 +20,8 @@
     var ballspeedy = 4;
     var paddle1y = 250;
     var paddle2y = 250;
+    var player1Score = 0;
+    var player2Score = 0;
 
     const PADDLE_HEIGHT = 100;
     const PADDLE_THICKNESS = 10;
@@ -63,11 +65,21 @@
       ballWhitex = canvas.width/2;
         ballWhitey = canvas.height/2;
     }
+    function computerMovement() {
+        var paddle2YCenter = paddle2y + (PADDLE_HEIGHT/2);
+        if (paddle2YCenter < ballWhitey - 35) {
+            paddle2y += 6;
+        }
+        else if (paddle2YCenter > ballWhitey + 35) {
+            paddle2y -= 6;
+        }
+    }
 
 
     function moveEverything () {
-        ballWhitex= ballWhitex + ballspeedx;
-        ballWhitey= ballWhitey + ballspeedy;
+        computerMovement();
+        ballWhitex +=   ballspeedx;
+        ballWhitey +=  ballspeedy;
         if (ballWhitex > canvas.width ) {
             if (ballWhitey > paddle2y &&
                     ballWhitey < paddle2y + PADDLE_HEIGHT) {
@@ -75,6 +87,7 @@
             }
             else {
                 ballReset();
+                player1Score++;
             }
         }
         /* bouncing back code */
@@ -86,6 +99,7 @@
             }
             else {
                 ballReset();
+                player2Score++;
             }
         }
         if (ballWhitey > canvas.height ) {
@@ -120,6 +134,8 @@
 
         // manually centering garna chai just : ........................
         // canvasContext.fillRect(398,298,4,4) ;
+        canvasContext.fillText(player1Score, 100 ,100 );
+        canvasContext.fillText(player2Score, canvas.width-100 ,100 );
     }
     //this function is template for drawing circle . cool style 
     function colorCircle(centerX,centerY,radius,drawColor) {
