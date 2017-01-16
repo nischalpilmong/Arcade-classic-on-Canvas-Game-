@@ -44,6 +44,7 @@ window.onload=function() {
     //window.onload = init(); // yo pani garna sakincha .
 
 
+    document.body.style.backgroundImage = "url('b1.jpg')";
     canvas=document.getElementById('gameClassic');
     canvasContext=canvas.getContext("2d");
     var frames =30;
